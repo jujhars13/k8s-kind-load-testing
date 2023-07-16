@@ -18,6 +18,7 @@ Developed on a Linux x86 machine.
 Tested working with:
 - kind `v0.20.0`
 - kubectl `v1.26.0` and utilizing `kustomize` for k8s manifest templates
+- [Vegeta](https://github.com/tsenart/vegeta) `v12.9` for simple load testing
 
 ### Coding Standards
 
@@ -77,7 +78,7 @@ kubectl wait --namespace ingress-nginx \
 # wait till appplication deploys
 kubectl wait --namespace k8s-kind-load-testing \
   --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=service-one \
+  --selector=app.kubernetes.io/component=app-one \
   --timeout=120s
 
 # check on the deployment
@@ -85,12 +86,12 @@ kubectl -n k8s-kind-load-testing get all
 
 # test service one with port-forwarding into the svc
 kubectl -n k8s-kind-load-testing \
-    port-forward svc/service-service-one 8080:5678
+    port-forward svc/service-app-one 8080:5678
 curl localhost:8080
 
 # test service two svc
 kubectl -n k8s-kind-load-testing \
-    port-forward svc/service-service-two 8081:5679
+    port-forward svc/service-app-two 8081:5679
 curl localhost:8081
 
 # test ingress, setup local dns overrides first
@@ -108,15 +109,15 @@ kind delete cluster --name kind-ci-load-testing
 
 ## Things I learnt
 
-- Using `kind` inside of a Gitlab C runner
+- Using `kind` inside of a Gitlab CI runner
 - Surfacing CI step results into a PR
 
 ### Things that bit me in the behind
 
 - The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` option
-- Struggled with nginx admission webhook for kind, apparently it's an issue with the tolerations of the nginx config in the latest versions of kind - had to write a manifest patch for nginx ingress to get around issue
+- Struggled with Nginx admission webhook for kind, apparently it's an issue with the tolerations of the Nginx config for the latest versions of kind - had to write a manifest patch for Nginx ingress to get around issue
 
-## ToDo
+## Todo
 
 - [x] setup ADR directory
 - [x] setup application stack in k8s
@@ -127,8 +128,8 @@ kind delete cluster --name kind-ci-load-testing
     - [x] test 
     - [x] replicate for second service (`1:54:00`)
     - [x] setup ingress to route between two deployments (`3:32:40`)
-- [ ] generate load
-    - [ ] hammer with vegeta - simple
+- [x] generate load
+    - [x] hammer with vegeta - simple
 - [ ] write Github actions setup to run all this in Github CI
 - [ ] get Vegeta output into PR
 

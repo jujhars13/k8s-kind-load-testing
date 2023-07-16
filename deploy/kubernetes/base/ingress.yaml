@@ -14,7 +14,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: service-service-one
+                name: service-app-one
                 port:
                   number: 80
     - host: bar.localhost
@@ -24,6 +24,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: service-service-two
+                name: service-app-two
                 port:
                   number: 80
