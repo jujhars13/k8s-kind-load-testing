@@ -13,7 +13,7 @@ We use ADRs as an immutable, collaborative document to record our technical deci
 
 ### Tooling
 
-Developed on a Linux x86 machine.
+Developed on a Linux `x86/64` machine.
 
 Tested working with:
 - kind `v0.20.0`
@@ -100,6 +100,7 @@ echo "
 127.0.0.1 foo.localhost
 127.0.0.1 bar.localhost
 " | sudo tee -a /etc/hosts
+
 curl -i http://foo.localhost
 curl -i http://bar.localhost
 
@@ -129,7 +130,7 @@ kind delete cluster --name kind-ci-load-testing
     - [x] replicate for second service (`1:54:00`)
     - [x] setup ingress to route between two deployments (`3:32:40`)
 - [x] generate load
-    - [x] hammer with vegeta - simple
+    - [x] hammer with vegeta - simple (`4:50:40`)
 - [ ] write Github actions setup to run all this in Github CI
 - [ ] get Vegeta output into PR
 
