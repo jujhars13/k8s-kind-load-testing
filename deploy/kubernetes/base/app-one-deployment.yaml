@@ -26,6 +26,7 @@ spec:
     metadata:
       labels:
         app: app-one
+        app.kubernetes.io/component: app-one
 
     spec:
       serviceAccountName: sa-k8s-kind-load-testing

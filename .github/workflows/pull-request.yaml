@@ -52,11 +52,11 @@ jobs:
           kubectl kustomize "deploy/kubernetes/${ENVIRONMENT}" | \
           kubectl apply -f -
 
-          # echo "Wait till appplication deploys..."
-          # kubectl wait --namespace k8s-kind-load-testing \
-          #   --for=condition=ready pod \
-          #   --selector=app.kubernetes.io/component=app-one \
-          #   --timeout=120s
+          echo "Wait till appplication deploys..."
+          kubectl wait --namespace k8s-kind-load-testing \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/component=app-one \
+            --timeout=120s
 
           echo "Check on the deployment"
           kubectl -n k8s-kind-load-testing get all
