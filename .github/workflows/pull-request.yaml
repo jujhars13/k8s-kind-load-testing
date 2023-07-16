@@ -77,7 +77,13 @@ jobs:
           URL: http://foo.localhost
           DURATION: 60s
         run: |
-          scripts/load-test.sh
+          export LOAD_TEST_OUTPUT=$(scripts/load-test.sh)
+          cat <<EOT >> /tmp/load-test-results-foo.md
+            ## Load test output for Foo service
+            $LOAD_TEST_OUTPUT
+          EOT
+
+          cat /tmp/load-test-results-foo.md >> $GITHUB_STEP_SUMMARY
 
       - name: Run Vegeta load test against Bar service
         env:
@@ -86,6 +92,8 @@ jobs:
         run: |
           export LOAD_TEST_OUTPUT=$(scripts/load-test.sh)
           cat <<EOT >> /tmp/load-test-results-bar.md
+            ---
+            
             ## Load test output for Bar service
             $LOAD_TEST_OUTPUT
           EOT

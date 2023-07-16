@@ -136,11 +136,11 @@ kind delete cluster --name kind-ci-load-testing
 - [x] generate load
     - [x] hammer with vegeta - simple (`4:50:40`)
 - [x] write Github actions setup to run all this in Github CI (`5:20:22`)
-- [ ] get Vegeta output into PR
+- [x] get Vegeta output into PR (`6:20:08`)
 
 ### Stretch goals
 
-- split CI into separate jobs for more modularity
+- [ ] split CI into separate jobs for more modularity and better readability
 - [ ] Setup some observability
     - [ ] deploy prom+grafana into cluster
     - [ ] surface container stats using `cadvisor`
