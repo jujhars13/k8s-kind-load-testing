@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one
+  labels:
+    app.kubernetes.io/component: app-one
+
+spec:
+  selector:
+    matchLabels:
+      app: app-one
+  replicas: 3
+  minReadySeconds: 7
+  strategy:
+    # indicate which strategy we want for rolling update
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 2
+
+  # only keep last n revisions in history
+  revisionHistoryLimit: 8
+
+  template:
+    metadata:
+      labels:
+        app: app-one
+
+    spec:
+      serviceAccountName: sa-k8s-kind-load-testing
+      restartPolicy: Always
+
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo:0.2.3
+          args: ["-text", "foo", "-listen", ":5678"]
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env-app-one
+          ports:
+            - containerPort: 5678
+              name: "http"
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5678
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            failureThreshold: 5
