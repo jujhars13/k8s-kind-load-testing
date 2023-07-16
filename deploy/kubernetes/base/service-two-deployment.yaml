@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: service-two
   labels:
-    app: service-two
+    app.kubernetes.io: service-two
 
 spec:
   selector:

@@ -5,3 +5,25 @@ metadata:
   annotations:
   labels:
     app: ing
+spec:
+  rules:
+    - host: foo.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service-service-one
+                port:
+                  number: 80
+    - host: bar.localhost
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service-service-two
+                port:
+                  number: 80

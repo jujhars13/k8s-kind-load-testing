@@ -15,4 +15,4 @@ resources:
   - service-two-configmap.yaml
   - service-two-deployment.yaml
   - service-two-service.yaml
-#  - ingress.yaml
+  - ingress.yaml

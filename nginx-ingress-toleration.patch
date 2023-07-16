@@ -1,0 +1,12 @@
+--- original.yaml	2023-07-16 14:27:08.927995927 +0100
++++ new.yaml	2023-07-16 14:27:57.823811410 +0100
+@@ -511,6 +511,9 @@
+       - effect: NoSchedule
+         key: node-role.kubernetes.io/control-plane
+         operator: Equal
++      - effect: NoSchedule
++        key: node-role.kubernetes.io/control-plane
++        operator: Equal
+       volumes:
+       - name: webhook-cert
+         secret:
