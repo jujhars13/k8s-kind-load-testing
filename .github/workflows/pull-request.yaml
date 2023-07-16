@@ -1,17 +1,26 @@
 name: pull-request
-
 on: [push, pull_request]
 
 jobs:
-  performance-test:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-  - name: Spin up Kind Cluster
-    uses: helm/kind-action@v1.8.0
-    with:
-      config: /scripts/kind-config.yaml
-  - name: Test kind cluster
-    run: |
-      kubectl cluster-info
-      kubectl get nodes
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lint Code Base
+        uses: github/super-linter@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_BASH: true
+          VALIDATE_YAML: true
+
+      - name: Spin up Kind Cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          config: /scripts/kind-config.yaml
+
+      - name: Test kind cluster
+        run: |
+          kubectl cluster-info
+          kubectl get nodes
