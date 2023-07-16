@@ -73,4 +73,15 @@ jobs:
           URL: http://bar.localhost
           DURATION: 60s
         run: |
-          scripts/load-test.sh
+          export LOAD_TEST_OUTOUT=$(scripts/load-test.sh)
+          mkdir -p /tmp/load-test-report
+          cat <<EOT >> /tmp/load-test-report/load-test-results-bar.md
+            ## Load test output for Bar service
+            $LOAD_TEST_OUTPUT
+          EOT
+
+      - name: Grab content for PR body
+        uses: zattoo/output@v1
+        with:
+          token: ${{github.token}}
+          sources: "tmp/load-test-report"

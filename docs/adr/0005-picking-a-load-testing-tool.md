@@ -22,4 +22,6 @@ Other tools worth considering:
 
 ## Consequences
 
-Vegeta is suited to simple "sledgehammer" type load testing, which is all we require at this stage.  For future implementations we can consider using a more nuanced tool like k3s
+Vegeta is suited to simple "sledgehammer" type load testing, which is all we require at this stage.
+We will **NOT** get much randomisation of data initially using default params and that will have to be injected in
+For future implementations we can consider using a more nuanced tool like k3s.
