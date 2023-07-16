@@ -2,15 +2,14 @@ name: pull-request
 on: [push, pull_request]
 
 jobs:
-  setup-and-test:
+  linting:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
-      statuses: write
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Lint
         uses: github/super-linter@v5
         env:
@@ -19,6 +18,18 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_BASH: true
           VALIDATE_YAML: true
+
+  setup-and-test:
+    if: ${{ always() }}
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Spin up Kind Cluster
         uses: helm/kind-action@v1.8.0
@@ -73,16 +84,10 @@ jobs:
           URL: http://bar.localhost
           DURATION: 60s
         run: |
-          export LOAD_TEST_OUTOUT=$(scripts/load-test.sh)
-          mkdir -p /tmp/load-test-report
-          cat <<EOT >> /tmp/load-test-report/load-test-results-bar.md
+          export LOAD_TEST_OUTPUT=$(scripts/load-test.sh)
+          cat <<EOT >> /tmp/load-test-results-bar.md
             ## Load test output for Bar service
             $LOAD_TEST_OUTPUT
           EOT
 
-      - name: Grab test result content for PR body
-        uses: zattoo/output@2.0.0
-        with:
-          name: Load-testing-results
-          token: ${{github.token}}
-          sources: "tmp/load-test-report"
+          cat /tmp/load-test-results-bar.md >> $GITHUB_STEP_SUMMARY
