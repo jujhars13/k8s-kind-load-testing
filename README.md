@@ -140,6 +140,7 @@ kind delete cluster --name kind-ci-load-testing
 
 ### Stretch goals
 
+- split CI into separate jobs for more modularity
 - [ ] Setup some observability
     - [ ] deploy prom+grafana into cluster
     - [ ] surface container stats using `cadvisor`

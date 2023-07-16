@@ -1,3 +1,4 @@
+---
 # env variables for container
 apiVersion: v1
 kind: ConfigMap
