@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-one-deployment
+  name: service-one
   labels:
     app: service-one
 

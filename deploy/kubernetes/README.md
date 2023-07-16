@@ -5,7 +5,8 @@ Using [Kustomize](https://kustomize.io/) to merge values for different kubernete
 ## Example
 
 ```bash
-(cd deploy/kubernetes &&
+
+(ENVIRONMENT="ci-performance" cd deploy/kubernetes &&
     kustomize build "${ENVIRONMENT}" | \
     kubectl apply -f -)
 ```
