@@ -18,7 +18,7 @@ jobs:
       - name: Spin up Kind Cluster
         uses: helm/kind-action@v1.8.0
         with:
-          config: /scripts/kind-config.yaml
+          config: scripts/kind-config.yaml
 
       - name: Test kind cluster
         run: |
