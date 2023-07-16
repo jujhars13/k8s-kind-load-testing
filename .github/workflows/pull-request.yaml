@@ -81,7 +81,7 @@ jobs:
           EOT
 
       - name: Grab test result content for PR body
-        uses: zattoo/output@v3
+        uses: zattoo/output@3.0.0
         with:
           name: Load-testing-results
           token: ${{github.token}}
