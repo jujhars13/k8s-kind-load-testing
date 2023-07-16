@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: env-service-one
+  name: env-service-two
 
 data:
   ENVIRONMENT: "unknown"
   VERSION: "unknown"
   # get echo text via env vars as well as flags
   # see https://github.com/hashicorp/http-echo/blob/main/main.go:41
-  ECHO_TEXT: "foo"
+  ECHO_TEXT: "bar"

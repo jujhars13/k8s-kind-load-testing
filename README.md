@@ -34,21 +34,33 @@ kubectl get nodes
 # check on the deployment
 kubectl -n k8s-kind-load-testing get all
 
+# test service one with port-forwarding into the svc
+kubectl -n k8s-kind-load-testing \
+    port-forward svc/service-service-one 8080:5678
+curl localhost:8080
+
+# test svc
+
 ```
 
 ## Things I learnt
 
-- Using `kind` inside of Gitlab CI
-- surfacing CI results into a PR
+- Using `kind` inside of a Gitlab C runner
+- Surfacing CI step results into a PR
+
+### Things that bit me in the behind
+
+- The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` option
+
 
 ## Todo
 
-- [ ] setup application stack in k8s
-    - [ ] setup Kustomize templates
-    - [ ] create namespace
-    - [ ] create deployment for http-echo
-    - [ ] setup services
-    - [ ] test 
+- [x] setup application stack in k8s
+    - [x] setup Kustomize templates
+    - [x] create namespace
+    - [x] create deployment for http-echo
+    - [x] setup service
+    - [x] test 
     - [ ] replicate for second service
     - [ ] setup ingress to route between two deployments
 - [ ] generate load
