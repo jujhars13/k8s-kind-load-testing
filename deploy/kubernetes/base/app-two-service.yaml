@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-service-two
-  labels:
-    app: service-two
+  name: service-app-two
 spec:
   type: ClusterIP
   ports:
@@ -11,4 +9,4 @@ spec:
       name: "http"
       targetPort: 5679
   selector:
-    app: service-two
+    app: app-two

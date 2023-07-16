@@ -1,8 +1,22 @@
 # Kind Load Testing
 
+[![GitHub Super-Linter](https://github.com/k8s-kind-load-testing/actions/workflows/pull-request.yml/badge.svg)](https://github.com/k8s-kind-load-testing/)
+
 A sample load testing setup for k8s hosted services leveraging Github CI actions.
 
 ![Dall-e: place a shipping container on top another container, pixel art](logo.png)
+
+
+## Things I learnt
+
+- Using `kind` inside of a Gitlab CI runner
+- Surfacing CI step results into a PR
+
+### Things that bit me in the behind
+
+- The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` option
+- Struggled with Nginx admission webhook for kind, apparently it's an issue with the tolerations of the Nginx config for the latest versions of kind - had to write a manifest patch for Nginx ingress to get around issue
+
 
 ## Development
 
@@ -108,16 +122,6 @@ curl -i http://bar.localhost
 kind delete cluster --name kind-ci-load-testing
 ```
 
-## Things I learnt
-
-- Using `kind` inside of a Gitlab CI runner
-- Surfacing CI step results into a PR
-
-### Things that bit me in the behind
-
-- The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` option
-- Struggled with Nginx admission webhook for kind, apparently it's an issue with the tolerations of the Nginx config for the latest versions of kind - had to write a manifest patch for Nginx ingress to get around issue
-
 ## Todo
 
 - [x] setup ADR directory
@@ -131,7 +135,7 @@ kind delete cluster --name kind-ci-load-testing
     - [x] setup ingress to route between two deployments (`3:32:40`)
 - [x] generate load
     - [x] hammer with vegeta - simple (`4:50:40`)
-- [ ] write Github actions setup to run all this in Github CI
+- [x] write Github actions setup to run all this in Github CI (`5:20:22`)
 - [ ] get Vegeta output into PR
 
 ### Stretch goals
@@ -143,5 +147,6 @@ kind delete cluster --name kind-ci-load-testing
     - [ ] surface some APM (application runtime telemetry)
     - [ ] surface cluster metrics: cpu/ram/network/disk
     - [ ] surface telemetry into PRs
+- [ ] Generate some nice gnuplots of load testing histograms
 - [ ] Write a more advanced load testing setup in k3s
 - [ ] Use Helm over Kustomize

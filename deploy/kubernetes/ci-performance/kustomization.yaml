@@ -7,9 +7,9 @@ resources:
   - ../base
 
 replicas:
-  - name: service-one
+  - name: app-one
     count: 1
-  - name: service-two
+  - name: app-two
     count: 1
 
 patches:

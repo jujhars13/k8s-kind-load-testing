@@ -19,12 +19,12 @@ docker run --rm --network=host -v /tmp:/tmp -i jujhars13/vegeta:1.2 \
         tee /tmp/results.bin |
         vegeta report"
 
-# generate HTML report
-docker run --rm  -v /tmp:/tmp -i jujhars13/vegeta:1.2 \
-    /bin/bash -c \
-    "cat /tmp/results.bin | vegeta plot > /tmp/plot.html"
+# # generate HTML report
+# docker run --rm  -v /tmp:/tmp -i jujhars13/vegeta:1.2 \
+#     /bin/bash -c \
+#     "cat /tmp/results.bin | vegeta plot > /tmp/plot.html"
 
-# generate report with histogram
+# generate report with ASCII histogram
 docker run --rm  -v /tmp:/tmp -i jujhars13/vegeta:1.2 \
     /bin/bash -c \
-    "cat /tmp/results.bin | vegeta report -type=\"hist[0,100ms,200ms,300ms]\""
+    "cat /tmp/results.bin | vegeta report -type=\"hist[0,10ms,50ms,100ms,200ms,300ms]\""

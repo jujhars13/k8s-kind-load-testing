@@ -12,9 +12,9 @@ We need to consider which load testing tool to use
 
 ## Decision
 
-We're going to use [Vegeta](https://github.com/tsenart/vegeta) as it is robust, simple and fast.  `Jujhars13` already has a tried and tested [docker hub image for it](https://hub.docker.com/r/jujhars13/vegeta)
+We're going to use [Vegeta](https://github.com/tsenart/vegeta) as it is robust, simple and fast.  `Jujhars13` already has a tried and tested [docker hub image for it](https://hub.docker.com/r/jujhars13/vegeta).  It also gives quite nice output `Latencies     [min, mean, 50, 90, 95, 99, max]` that quickly tick the box for us
 
-Other tools worth considering
+Other tools worth considering:
 - Gatling (popular in market)
 - k3s (allow for more complex load testing scenarios)
 - Apache bench (very simple and trusted tool)

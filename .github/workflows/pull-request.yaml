@@ -16,7 +16,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
           VALIDATE_BASH: true
           VALIDATE_YAML: true
 
@@ -45,11 +45,12 @@ jobs:
           kubectl --namespace ingress-nginx get all
 
       - name: Deploy our application stack
+        env:
+          ENVIRONMENT: "ci-performance"
         run: |
           echo "Deploy application stack"
-          (ENVIRONMENT="ci-performance"
-              kubectl kustomize "deploy/kubernetes/${ENVIRONMENT}" | \
-              kubectl apply -f -)
+          kubectl kustomize "deploy/kubernetes/${ENVIRONMENT}" | \
+          kubectl apply -f -
 
           echo "Wait till appplication deploys..."
           kubectl wait --namespace k8s-kind-load-testing \
@@ -59,3 +60,17 @@ jobs:
 
           echo "Check on the deployment"
           kubectl -n k8s-kind-load-testing get all
+
+      - name: Run Vegeta load test against Foo service
+        env:
+          URL: http://foo.localhost
+          DURATION: 60s
+        run: |
+          scripts/load-test.sh
+
+      - name: Run Vegeta load test against Bar service
+        env:
+          URL: http://bar.localhost
+          DURATION: 60s
+        run: |
+          scripts/load-test.sh
