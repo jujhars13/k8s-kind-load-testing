@@ -14,7 +14,7 @@ A sample load testing setup for k8s hosted services leveraging Github CI actions
 
 ### Things that bit me in the behind
 
-- The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` option
+- The version of `http-echo` published on [Docker hub](https://hub.docker.com/r/hashicorp/http-echo) is way behind the version in the [Github repo](https://github.com/hashicorp/http-echo). The code in the repo allows for the setting of the `ECHO_TEXT` env var and not the Docker hub mandatory `-text` cli option
 - Struggled with Nginx admission webhook for kind, apparently it's an issue with the tolerations of the Nginx config for the latest versions of kind - had to write a manifest patch for Nginx ingress to get around issue
 
 
