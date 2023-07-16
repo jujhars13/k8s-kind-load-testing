@@ -85,9 +85,9 @@ jobs:
           DURATION: 60s
         run: |
           export LOAD_TEST_OUTPUT=$(scripts/load-test.sh)
-          mkdir -p /tmp/load-test-report
           cat <<EOT >> /tmp/load-test-results-bar.md
             ## Load test output for Bar service
-            $LOAD_TEST_OUTPUT 
+            $LOAD_TEST_OUTPUT
           EOT
+
           cat /tmp/load-test-results-bar.md >> $GITHUB_STEP_SUMMARY
