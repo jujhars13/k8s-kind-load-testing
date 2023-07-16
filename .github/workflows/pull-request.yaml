@@ -2,15 +2,20 @@ name: pull-request
 on: [push, pull_request]
 
 jobs:
-  setup:
+  setup-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
 
     steps:
       - uses: actions/checkout@v3
-
-      - name: Lint Code Base
+      - name: Lint
         uses: github/super-linter@v5
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_BASH: true
           VALIDATE_YAML: true
@@ -20,7 +25,21 @@ jobs:
         with:
           config: scripts/kind-config.yaml
 
-      - name: Test kind cluster
+      - name: Test kind cluster is working
         run: |
           kubectl cluster-info
           kubectl get nodes
+
+      - name: Deploy nginx ingress controller
+        run: |
+          curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml --output /tmp/ingress-nginx-deploy.yaml
+          patch -u /tmp/ingress-nginx-deploy.yaml -i nginx-ingress-toleration.patch
+          kubectl apply -f /tmp/ingress-nginx-deploy.yaml
+
+          echo "Wait till ingress is ready"
+          kubectl wait --namespace ingress-nginx \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/component=controller \
+            --timeout=120s
+
+          kubectl --ns ingress-nginx get all
