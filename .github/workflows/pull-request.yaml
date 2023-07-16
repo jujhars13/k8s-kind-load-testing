@@ -30,16 +30,32 @@ jobs:
           kubectl cluster-info
           kubectl get nodes
 
-      - name: Deploy nginx ingress controller
+      - name: Deploy nginx ingress controller to kind cluster
         run: |
           curl https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml --output /tmp/ingress-nginx-deploy.yaml
           patch -u /tmp/ingress-nginx-deploy.yaml -i nginx-ingress-toleration.patch
           kubectl apply -f /tmp/ingress-nginx-deploy.yaml
 
-          echo "Wait till ingress is ready"
+          echo "Wait till ingress is ready..."
           kubectl wait --namespace ingress-nginx \
             --for=condition=ready pod \
             --selector=app.kubernetes.io/component=controller \
             --timeout=120s
 
-          kubectl --ns ingress-nginx get all
+          kubectl --namespace ingress-nginx get all
+
+      - name: Deploy our application stack
+        run: |
+          echo "Deploy application stack"
+          (ENVIRONMENT="ci-performance"
+              kubectl kustomize "deploy/kubernetes/${ENVIRONMENT}" | \
+              kubectl apply -f -)
+
+          echo "Wait till appplication deploys..."
+          kubectl wait --namespace k8s-kind-load-testing \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/component=app-one \
+            --timeout=120s
+
+          echo "Check on the deployment"
+          kubectl -n k8s-kind-load-testing get all
