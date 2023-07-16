@@ -7,18 +7,20 @@ jobs:
     permissions:
       contents: read
 
-    - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-    - name: Lint
-      uses: github/super-linter@v5
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEFAULT_BRANCH: main
-        VALIDATE_ALL_CODEBASE: true
-        VALIDATE_BASH: true
-        VALIDATE_YAML: true
+      - name: Lint
+        uses: github/super-linter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_BASH: true
+          VALIDATE_YAML: true
 
   setup-and-test:
+    if: ${{ always() }}
     needs: [linting]
 
     runs-on: ubuntu-latest
@@ -28,7 +30,7 @@ jobs:
       statuses: write
 
     steps:
-        - name: Spin up Kind Cluster
+      - name: Spin up Kind Cluster
         uses: helm/kind-action@v1.8.0
         with:
           config: scripts/kind-config.yaml
