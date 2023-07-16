@@ -1,0 +1,9 @@
+# env variables for container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: env-service-one
+
+data:
+  ENVIRONMENT: "unknown"
+  VERSION: "unknown"

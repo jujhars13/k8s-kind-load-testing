@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-one-deployment
+  labels:
+    app: service-one
+
+spec:
+  selector:
+    matchLabels:
+      app: service-one
+  replicas: 3
+  minReadySeconds: 7
+  strategy:
+    # indicate which strategy we want for rolling update
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 2
+
+  # only keep last n revisions in history
+  revisionHistoryLimit: 8
+
+  template:
+    metadata:
+      labels:
+        app: service-one
+
+    spec:
+      serviceAccountName: sa-load-testing
+      restartPolicy: Always
+
+      containers:
+        - name: http-echo
+          image: hashicorp/http-echo
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: env-service-one
+          ports:
+            - containerPort: 5678
+              name: "http"
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5678
+            initialDelaySeconds: 5
+            periodSeconds: 30
+            failureThreshold: 5

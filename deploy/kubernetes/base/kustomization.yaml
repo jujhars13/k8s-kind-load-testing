@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: k8s-kind-load-testing
+
+commonLabels:
+  projectName: k8s-kind-load-testing
+
+resources:
+  - namespace.yaml
+  - service-account.yaml
+  - service-one-configmap.yaml
+  - service-one-deployment.yaml
+  - service-one-service.yaml
+#  - ingress.yaml

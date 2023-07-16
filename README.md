@@ -20,12 +20,13 @@ Tested working with:
 
 ## Todo
 
-- [ ] Setup kind and document commands
 - [ ] setup application stack in k8s
     - [ ] setup Kustomize templates
     - [ ] create namespace
-    - [ ] create 2x different deployment for http-echo
+    - [ ] create deployment for http-echo
     - [ ] setup services
+    - [ ] test 
+    - [ ] replicate for second service
     - [ ] setup ingress to route between two deployments
 - [ ] generate load
     - [ ] hammer with vegeta - simple
@@ -37,4 +38,6 @@ Tested working with:
 - [ ] Write a load testing setup in k3s
 - [ ] Setup some observability
     - [ ] surface cluster metrics
+    - [ ] implement nginx sidecar to surface prometheus telemetry
     - [ ] surface some APM (application runtime telemetry)
+    - [ ] surface telemetry into PRs
