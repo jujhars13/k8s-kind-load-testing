@@ -1,6 +1,6 @@
 # Kind Load Testing
 
-[![GitHub Super-Linter](https://github.com/k8s-kind-load-testing/actions/workflows/pull-request.yml/badge.svg)](https://github.com/k8s-kind-load-testing/)
+[![pull-request](https://github.com/jujhars13/k8s-kind-load-testing/actions/workflows/pull-request.yaml/badge.svg)](https://github.com/jujhars13/k8s-kind-load-testing/actions/workflows/pull-request.yaml)
 
 A sample load testing setup for k8s hosted services leveraging Github CI actions.
 
