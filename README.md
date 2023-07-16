@@ -141,6 +141,8 @@ kind delete cluster --name kind-ci-load-testing
 ### Stretch goals
 
 - [ ] split CI into separate jobs for more modularity and better readability
+  - [ ] move linting step to push event
+  - [ ] limit load testing to pull request only
 - [ ] Setup some observability
     - [ ] deploy prom+grafana into cluster
     - [ ] surface container stats using `cadvisor`
