@@ -80,8 +80,9 @@ jobs:
             $LOAD_TEST_OUTPUT
           EOT
 
-      - name: Grab content for PR body
-        uses: zattoo/output@v1
+      - name: Grab test result content for PR body
+        uses: zattoo/output@v3
         with:
+          name: Load-testing-results
           token: ${{github.token}}
           sources: "tmp/load-test-report"
