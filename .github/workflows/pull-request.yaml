@@ -21,7 +21,6 @@ jobs:
 
   setup-and-test:
     if: ${{ always() }}
-    needs: [linting]
 
     runs-on: ubuntu-latest
     permissions:
@@ -30,6 +29,8 @@ jobs:
       statuses: write
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Spin up Kind Cluster
         uses: helm/kind-action@v1.8.0
         with:
