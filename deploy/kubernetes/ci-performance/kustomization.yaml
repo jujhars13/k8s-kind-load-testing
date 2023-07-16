@@ -8,7 +8,9 @@ resources:
 
 replicas:
   - name: service-one
-    count: 3
+    count: 1
+  - name: service-two
+    count: 1
 
 patches:
   - target:

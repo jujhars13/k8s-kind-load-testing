@@ -12,4 +12,7 @@ resources:
   - service-one-configmap.yaml
   - service-one-deployment.yaml
   - service-one-service.yaml
+  - service-two-configmap.yaml
+  - service-two-deployment.yaml
+  - service-two-service.yaml
 #  - ingress.yaml
