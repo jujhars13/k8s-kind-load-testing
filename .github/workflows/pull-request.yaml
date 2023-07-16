@@ -90,4 +90,4 @@ jobs:
             ## Load test output for Bar service
             $LOAD_TEST_OUTPUT 
           EOT
-          < load-test-results-bar.md >> $GITHUB_STEP_SUMMARY
+          < /tmp/load-test-results-bar.md >> $GITHUB_STEP_SUMMARY
